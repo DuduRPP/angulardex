@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-list',
@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  breakpoint=2;
+  breakpoint = 2;
+  showButton = false;
 
   calculateBreakpoint(width:number): number{
     if(width < 578){
@@ -28,5 +29,13 @@ export class ListComponent implements OnInit {
 
   onResize(event: any) {
     this.breakpoint = this.calculateBreakpoint(event.target.innerWidth);
+  }
+
+  @HostListener('window:scroll')
+  onScroll(): void{
+    this.showButton = (window.pageYOffset || document.documentElement.scrollTop) > 300;
+  }
+  scrollToTop(): void{
+    window.scrollTo({top: 0,behavior: 'smooth'});
   }
 }
