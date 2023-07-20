@@ -1,4 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { PokeApiService } from '../../services/poke-api.service';
+import { Type } from '../../types/type';
+import { PokemonDisplay } from '../../types/pokemonDisplay';
 
 @Component({
   selector: 'app-list',
@@ -6,8 +9,9 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  breakpoint = 2;
-  showButton = false;
+  public breakpoint = 2;
+  public showButton = false;
+  public getAllPokemon: any;
 
   calculateBreakpoint(width:number): number{
     if(width < 578){
@@ -23,8 +27,21 @@ export class ListComponent implements OnInit {
     }
   }
 
+  constructor(
+    private pokeApiService: PokeApiService
+  ){
+
+  }
+
   ngOnInit() {
     this.breakpoint = this.calculateBreakpoint(window.innerWidth);
+    this.pokeApiService.apiListAllPokemon.subscribe(
+      res => {
+        this.getAllPokemon = res.results;
+        console.log(res);
+      }
+    );
+
   }
 
   onResize(event: any) {

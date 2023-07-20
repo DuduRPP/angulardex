@@ -7,12 +7,17 @@ import { CardComponent } from './components/card/card.component';
 import { ListComponent } from './components/list/list.component';
 import { SearchComponent } from './components/search/search.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { DetailsComponent } from './components/details/details.component';
 
-const routes : Routes = [{path: '', component: DexComponent}];
+const routes : Routes = [
+  {path: '', component: DexComponent},
+  {path: 'details/:id', component: DetailsComponent}
+];
 
 @NgModule({
   declarations: [DexComponent, CardComponent, ListComponent, SearchComponent],
-  imports: [FormsModule,CommonModule, RouterModule.forChild(routes),MaterialModule],
+  imports: [HttpClientModule,FormsModule,CommonModule, RouterModule.forChild(routes),MaterialModule],
   providers: [],
 })
 export class DexModule {}

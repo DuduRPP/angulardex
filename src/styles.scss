@@ -10,3 +10,15 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 1.6rem;
 }
+
+@supports (-moz-appearance:none) {
+  .mat-form-field-label-wrapper {
+          margin-top: -6px;
+  }
+}
+
+@-moz-document url-prefix() {
+  .mat-form-field-label-wrapper {
+      margin-top: -6px;
+  }
+}

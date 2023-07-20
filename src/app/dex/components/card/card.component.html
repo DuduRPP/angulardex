@@ -1,13 +1,18 @@
-<mat-card class="example-card">
-  <mat-card-header>
-    <mat-card-subtitle>#0001</mat-card-subtitle>
-    <mat-card-title>Bulbasaur</mat-card-title>
-  </mat-card-header>
-  <img mat-card-md-image src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="Photo of a Shiba Inu">
-  <mat-card-content>
-    <ul class="types">
-      <a href=""><li class="type grass">Grass</li></a>
-      <a href=""><li class="type poison">Poison</li></a>
-    </ul>
-  </mat-card-content>
-</mat-card>
+<ng-container *ngIf="pokemon.status">
+  <mat-card class="example-card">
+    <a [routerLink]="['details',pokemon.status.id]">
+      <mat-card-header>
+        <mat-card-subtitle>#{{leadingZeros(pokemon.status.id)}}</mat-card-subtitle>
+        <mat-card-title>{{capitalize(pokemon.name)}}</mat-card-title>
+      </mat-card-header>
+      <img mat-card-md-image [src]="getImage(pokemon.status.id)" [alt]="'Photo of ' + pokemon.name">
+    </a>
+    <mat-card-content>
+      <ul class="types">
+        <a href="" *ngFor="let typ of pokemon.status.types ">
+          <li [class]="'type ' + typ.type.name.toLowerCase()">{{typ.type.name}}</li>
+        </a>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
