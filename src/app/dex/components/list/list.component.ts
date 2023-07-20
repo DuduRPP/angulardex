@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { PokeApiService } from '../../services/poke-api.service';
+import { PokemonEntry } from '../../types/pokemonEntry';
 import { Type } from '../../types/type';
-import { PokemonDisplay } from '../../types/pokemonDisplay';
 
 @Component({
   selector: 'app-list',
@@ -11,7 +11,8 @@ import { PokemonDisplay } from '../../types/pokemonDisplay';
 export class ListComponent implements OnInit {
   public breakpoint = 2;
   public showButton = false;
-  public getAllPokemon: any;
+  public allPokemonList: PokemonEntry[];
+  public listedPokemon: PokemonEntry[];
 
   calculateBreakpoint(width:number): number{
     if(width < 578){
@@ -37,8 +38,8 @@ export class ListComponent implements OnInit {
     this.breakpoint = this.calculateBreakpoint(window.innerWidth);
     this.pokeApiService.apiListAllPokemon.subscribe(
       res => {
-        this.getAllPokemon = res.results;
-        console.log(res);
+        this.allPokemonList = res.results;
+        this.listedPokemon = this.allPokemonList;
       }
     );
 
@@ -54,5 +55,16 @@ export class ListComponent implements OnInit {
   }
   scrollToTop(): void{
     window.scrollTo({top: 0,behavior: 'smooth'});
+  }
+
+  getSearch(value: string): void{
+    const filteredPokemon = this.allPokemonList.filter( (res: PokemonEntry) => {
+      let a = res.status.types.map<boolean>((a)=>{
+        return a.type.name.includes(value.toLowerCase());
+      })
+      return res.name.includes(value.toLowerCase()) || a.reduce((a,b)=> a || b);
+    })
+
+    this.listedPokemon = filteredPokemon;
   }
 }
