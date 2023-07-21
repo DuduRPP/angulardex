@@ -1,18 +1,28 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { PokeApiService } from '../../services/poke-api.service';
 import { PokemonEntry } from '../../types/pokemonEntry';
 import { Type } from '../../types/type';
+import { Observable, lastValueFrom, map, switchMap } from 'rxjs';
+import { PokeApiResponse } from '../../types/pokeApiResponse';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnChanges {
   public breakpoint = 2;
   public showButton = false;
   public allPokemonList: PokemonEntry[];
   public listedPokemon: PokemonEntry[];
+  private pokeListObservable: Observable<PokeApiResponse>;
+
+  @Input('searched')
+  public searched = "";
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
 
   calculateBreakpoint(width:number): number{
     if(width < 578){
@@ -36,13 +46,13 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.breakpoint = this.calculateBreakpoint(window.innerWidth);
-    this.pokeApiService.apiListAllPokemon.subscribe(
+    this.pokeListObservable = this.pokeApiService.apiListAllPokemon;
+    this.pokeListObservable.subscribe(
       res => {
         this.allPokemonList = res.results;
         this.listedPokemon = this.allPokemonList;
       }
     );
-
   }
 
   onResize(event: any) {

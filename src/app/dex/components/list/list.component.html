@@ -1,13 +1,15 @@
-<app-search (emitSearch)="getSearch($event)"></app-search>
+<div *ngIf="allPokemonList">
+  <app-search (emitSearch)="getSearch($event)" [searchedName]="searched" *ngIf="allPokemonList[50].status"></app-search>
+  <section class="list">
+    <mat-grid-list [cols]="breakpoint" rowHeight="28rem" (window:resize)="onResize($event)">
+      <mat-grid-tile *ngFor="let poke of listedPokemon"><app-card [pokemon]="poke"></app-card></mat-grid-tile>
+    </mat-grid-list>
+  </section>
+</div>
 
 <button mat-mini-fab matTooltip="Primary" color="accent" [hidden]="!showButton" (click)="scrollToTop()">
   <mat-icon fontIcon="arrow_upward"></mat-icon>
 </button>
 
-<section class="list">
-  <mat-grid-list [cols]="breakpoint" rowHeight="28rem" (window:resize)="onResize($event)">
-    <mat-grid-tile *ngFor="let poke of listedPokemon"><app-card [pokemon]="poke"></app-card></mat-grid-tile>
-  </mat-grid-list>
-</section>
 
 

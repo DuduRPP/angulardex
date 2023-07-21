@@ -9,8 +9,10 @@
         <img   [src]="getImage(pokemon.id)">
       </div>
       <div class="header-row">
-        <ul class="types" *ngFor="let typ of pokemon.types ">
-          <a href=""><li [class]="'type ' + typ.type.name.toLowerCase()">{{typ.type.name}}</li></a>
+        <ul class="types">
+          <li *ngFor="let typ of pokemon.types ">
+            <a [class]="'type ' + typ.type.name.toLowerCase()" [routerLink]="['/search',typ.type.name]"  >{{typ.type.name}}</a>
+          </li>
         </ul>
       </div>
     </mat-card-header>

@@ -12,7 +12,8 @@ import { DetailsComponent } from './components/details/details.component';
 
 const routes : Routes = [
   {path: '', component: DexComponent},
-  {path: 'details/:id', component: DetailsComponent}
+  {path: 'details/:id', component: DetailsComponent},
+  {path: 'search/:value', component: DexComponent},
 ];
 
 @NgModule({
