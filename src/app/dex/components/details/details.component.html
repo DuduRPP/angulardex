@@ -1,1 +1,32 @@
-<p>details works!</p>
+<div class="container" *ngIf="pokemon">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div class="header-column">
+        <mat-card-title-group>
+          <mat-card-subtitle>#{{ leadingZeros(pokemon.id) }}</mat-card-subtitle>
+          <mat-card-title>{{capitalize(pokemon.name)}}</mat-card-title>
+        </mat-card-title-group>
+        <img   [src]="getImage(pokemon.id)">
+      </div>
+      <div class="header-row">
+        <ul class="types" *ngFor="let typ of pokemon.types ">
+          <a href=""><li [class]="'type ' + typ.type.name.toLowerCase()">{{typ.type.name}}</li></a>
+        </ul>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-tab-group fitInkBarToContent>
+        <mat-tab label="Status" >
+          <ul class="stats" *ngFor="let value of pokemon.stats">
+            <li>
+              <p>{{capitalize(value.stat.name)}}: {{value.base_stat}}</p>
+              <mat-progress-bar mode="determinate" [value]="calcStatPercentage(value.base_stat)"></mat-progress-bar>
+            </li>
+          </ul>
+        </mat-tab>
+        <mat-tab label="Evolutions" disabled=""> Content 2 </mat-tab>
+        <mat-tab label="Moves" disabled=""> Content 3 </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

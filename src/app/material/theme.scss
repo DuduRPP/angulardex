@@ -3,7 +3,7 @@
 @include mat.core();
 
 $my-primary: mat.define-palette(mat.$indigo-palette);
-$my-accent: mat.define-palette(mat.$deep-purple-palette);
+$my-accent: mat.define-palette(mat.$indigo-palette);
 $my-warn: mat.define-palette(mat.$red-palette);
 
 $my-primary-dark: mat.define-palette(mat.$amber-palette);

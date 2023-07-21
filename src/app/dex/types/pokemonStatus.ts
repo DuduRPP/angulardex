@@ -9,5 +9,6 @@ export interface PokemonStatus{
       name: Type,
       url: string,
     }
-  }[]
+  }[],
+  stats: any
 }

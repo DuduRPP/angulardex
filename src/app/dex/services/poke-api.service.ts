@@ -8,20 +8,30 @@ import { PokemonStatus } from '../types/pokemonStatus';
   providedIn: 'root'
 })
 export class PokeApiService {
-  private url: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151"
+  private urlAll: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151";
+  private urlSingle: string = "https://pokeapi.co/api/v2/pokemon/";
 
   constructor(
     private http: HttpClient
   ) { }
 
   get apiListAllPokemon():Observable<PokeApiResponse>{
-    return this.http.get<PokeApiResponse>(this.url).pipe(
+    return this.http.get<PokeApiResponse>(this.urlAll).pipe(
       tap(res => res.results.map(
         (resPokemon) => {
-          return this.http.get<PokemonStatus>(resPokemon.url).subscribe(resStatus => resPokemon.status = resStatus)
+          return this.apiGetPokemonFromUrl(resPokemon.url).subscribe(resStatus => resPokemon.status = resStatus)
         }
       )
       )
     );
   }
+
+  apiGetPokemonFromUrl(url: string): Observable<PokemonStatus>{
+    return this.http.get<PokemonStatus>(url)
+  }
+
+  apiGetPokemonFromId(id: number): Observable<PokemonStatus>{
+    return this.http.get<PokemonStatus>(this.urlSingle+id)
+  }
+
 }

@@ -16,7 +16,7 @@ const routes : Routes = [
 ];
 
 @NgModule({
-  declarations: [DexComponent, CardComponent, ListComponent, SearchComponent],
+  declarations: [DexComponent, CardComponent, ListComponent, SearchComponent,DetailsComponent],
   imports: [HttpClientModule,FormsModule,CommonModule, RouterModule.forChild(routes),MaterialModule],
   providers: [],
 })

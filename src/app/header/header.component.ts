@@ -10,7 +10,6 @@ export class HeaderComponent implements AfterViewInit{
 
   constructor(private renderer: Renderer2){
       const storedTheme = localStorage.getItem('darkTheme');
-      console.log(storedTheme);
       if(storedTheme){
           this.isDarkTheme = storedTheme === 'true';
           this.applyTheme(this.isDarkTheme);
@@ -38,7 +37,6 @@ export class HeaderComponent implements AfterViewInit{
   }
 
   private applyTheme(isDark: boolean) {
-    console.log(isDark);
     const body =  document.body;
     if (isDark) {
       this.renderer.addClass(body, 'dark-theme');
