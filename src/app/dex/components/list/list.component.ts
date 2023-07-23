@@ -2,7 +2,7 @@ import { Component, HostListener, Input, OnChanges, OnInit, SimpleChanges } from
 import { PokeApiService } from '../../services/poke-api.service';
 import { PokemonEntry } from '../../types/pokemonEntry';
 import { Type } from '../../types/type';
-import { Observable, lastValueFrom, map, switchMap } from 'rxjs';
+import { Observable, combineLatest, filter, lastValueFrom, map, switchMap } from 'rxjs';
 import { PokeApiResponse } from '../../types/pokeApiResponse';
 
 @Component({
@@ -15,7 +15,7 @@ export class ListComponent implements OnInit, OnChanges {
   public showButton = false;
   public allPokemonList: PokemonEntry[];
   public listedPokemon: PokemonEntry[];
-  private pokeListObservable: Observable<PokeApiResponse>;
+  public visiblePoke$: Observable<PokemonEntry[]>;
 
   @Input('searched')
   public searched = "";
@@ -41,18 +41,22 @@ export class ListComponent implements OnInit, OnChanges {
   constructor(
     private pokeApiService: PokeApiService
   ){
-
+    this.visiblePoke$ = this.pokeApiService.allPokemon$
   }
 
   ngOnInit() {
     this.breakpoint = this.calculateBreakpoint(window.innerWidth);
-    this.pokeListObservable = this.pokeApiService.apiListAllPokemon;
-    this.pokeListObservable.subscribe(
-      res => {
-        this.allPokemonList = res.results;
-        this.listedPokemon = this.allPokemonList;
-      }
-    );
+    this.pokeApiService.apiListAllPokemon();
+    //this.visiblePoke$ = this.pokeApiService.allPokemon$;
+
+    this.visiblePoke$ = combineLatest([
+       this.pokeApiService.allPokemon$,
+       this.pokeApiService.searchFilter$
+    ]).pipe(
+        map( ([allPoke,filterValue]: [PokemonEntry[], string]) =>{
+          return allPoke.filter(poke => poke.name.includes(filterValue));
+        })
+    )
   }
 
   onResize(event: any) {
@@ -68,13 +72,6 @@ export class ListComponent implements OnInit, OnChanges {
   }
 
   getSearch(value: string): void{
-    const filteredPokemon = this.allPokemonList.filter( (res: PokemonEntry) => {
-      let a = res.status.types.map<boolean>((a)=>{
-        return a.type.name.includes(value.toLowerCase());
-      })
-      return res.name.includes(value.toLowerCase()) || a.reduce((a,b)=> a || b);
-    })
-
-    this.listedPokemon = filteredPokemon;
+    this.pokeApiService.setFilter(value);
   }
 }

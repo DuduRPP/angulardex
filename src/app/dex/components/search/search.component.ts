@@ -12,9 +12,10 @@ export class SearchComponent implements OnChanges{
   public searched = "";
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.searched)
-    this.value = ''
-    this.value = this.searched;
+    if(this.searched){
+      this.value = this.searched;
+    }
+    this.search();
   }
 
   @Output()
