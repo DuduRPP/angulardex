@@ -22,7 +22,12 @@
           <ul class="stats" *ngFor="let value of pokemon.stats">
             <li>
               <p>{{capitalize(value.stat.name)}}: {{value.base_stat}}</p>
-              <mat-progress-bar mode="determinate" [value]="calcStatPercentage(value.base_stat)"></mat-progress-bar>
+              <mat-progress-bar
+                mode="determinate"
+                color="green"
+                [class]="determineRating(value.base_stat)"
+                [value]="calcStatPercentage(value.base_stat)">
+              </mat-progress-bar>
             </li>
           </ul>
         </mat-tab>

@@ -9,7 +9,7 @@ import { PokemonEntry } from '../types/pokemonEntry';
   providedIn: 'root'
 })
 export class PokeApiService {
-  private urlAll: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=200";
+  private urlAll: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=100";
   private urlSingle: string = "https://pokeapi.co/api/v2/pokemon/";
 
   allPokemon$ = new BehaviorSubject<PokemonEntry[]>([]);

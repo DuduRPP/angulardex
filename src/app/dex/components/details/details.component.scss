@@ -18,6 +18,10 @@ mat-card{
     margin-bottom: 1.6rem;
   }
 
+  .types{
+    gap: 1.6rem;
+  }
+
   img{
     width: 20rem;
     height: auto;
@@ -27,8 +31,6 @@ mat-card{
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  mat-card-content{
   }
 
   .stats{
@@ -45,4 +47,26 @@ mat-card{
   display: flex;
   flex-direction: row !important;
   margin: 1.6rem;
+}
+
+.mat-mdc-progress-bar {
+   //progress bar color
+  --mdc-linear-progress-track-color: black; // background color
+
+}
+
+.bad{
+  --mdc-linear-progress-active-indicator-color: #f34444 !important;
+}
+.average{
+  --mdc-linear-progress-active-indicator-color: #ff7f0f !important;
+}
+.good{
+  --mdc-linear-progress-active-indicator-color: #a0e515 !important;
+}
+.great{
+  --mdc-linear-progress-active-indicator-color: #23cd5e !important;
+}
+.perfect{
+  --mdc-linear-progress-active-indicator-color: #00c2b8 !important;
 }

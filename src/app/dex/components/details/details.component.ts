@@ -30,6 +30,19 @@ export class DetailsComponent implements OnInit {
     });
   }
 
+  determineRating(value:number): string{
+    if(value <= 25){
+      return "bad";
+    } else if(value <= 85){
+      return "average";
+    } else if(value <= 125){
+      return "good";
+    } else if(value <= 200){
+      return "great";
+    }
+    return "perfect";
+  }
+
   public leadingZeros(n: number): string{
     let s = String(n);
     while(s.length < 4){
