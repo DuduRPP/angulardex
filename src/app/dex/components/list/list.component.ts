@@ -55,7 +55,8 @@ export class ListComponent implements OnInit, OnChanges {
     ]).pipe(
         map( ([allPoke,filterValue]: [PokemonEntry[], string]) =>{
           return allPoke.filter(poke => {
-            return poke.name.includes(filterValue) || String(allPoke.indexOf(poke) + 1) == filterValue;
+            return poke.name.includes(filterValue) ||
+            (poke.status.id ? String(poke.status.id) === filterValue : false )
           });
         })
     )
