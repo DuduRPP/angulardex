@@ -54,7 +54,9 @@ export class ListComponent implements OnInit, OnChanges {
        this.pokeApiService.searchFilter$
     ]).pipe(
         map( ([allPoke,filterValue]: [PokemonEntry[], string]) =>{
-          return allPoke.filter(poke => poke.name.includes(filterValue));
+          return allPoke.filter(poke => {
+            return poke.name.includes(filterValue) || String(allPoke.indexOf(poke) + 1) == filterValue;
+          });
         })
     )
   }

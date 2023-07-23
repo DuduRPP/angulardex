@@ -14,6 +14,9 @@ const routes : Routes = [
   {path: '', component: DexComponent},
   {path: 'details/:id', component: DetailsComponent},
   {path: 'search/:value', component: DexComponent},
+  {path: 's/:value', component: DexComponent},
+  {path: 'pokemon/:value', component: DexComponent},
+  {path: 'p/:value', component: DexComponent},
 ];
 
 @NgModule({
