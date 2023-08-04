@@ -8,6 +8,7 @@ import {
   from,
   map,
   mergeMap,
+  switchMap,
 } from "rxjs";
 import { PokeApiResponse } from "../types/pokeApiResponse";
 import { PokemonStatus } from "../types/pokemonStatus";
@@ -17,7 +18,7 @@ import { PokemonStatus } from "../types/pokemonStatus";
 })
 export class PokeApiService {
   private urlAll: string =
-    "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=505";
+    "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151";
   private urlSingle: string = "https://pokeapi.co/api/v2/pokemon/";
 
   allPokemon$ = new BehaviorSubject<PokemonStatus[]>([]);
@@ -45,6 +46,7 @@ export class PokeApiService {
         mergeMap((value) => value)
       )
       .subscribe((res) => {
+        console.log(res);
         this.allPokemon$.next([...this.allPokemon$.getValue(), res]);
       });
   }

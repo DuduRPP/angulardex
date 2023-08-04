@@ -19,5 +19,10 @@ export class DexComponent implements OnInit {
 
   ngOnInit(): void {
     this.search = this.activatedRoute.snapshot.params["value"];
+    this.activatedRoute.params.subscribe((params) => {
+      if (params["value"]) {
+        this.search = params["value"] ?? "";
+      }
+    });
   }
 }

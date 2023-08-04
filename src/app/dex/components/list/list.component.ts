@@ -36,7 +36,7 @@ export class ListComponent implements OnInit, OnChanges {
   public visiblePoke$: Observable<PokemonStatus[]>;
 
   @Input("searched")
-  public searched = "";
+  public searched: string = "";
 
   ngOnChanges(changes: SimpleChanges): void {}
 
@@ -70,7 +70,9 @@ export class ListComponent implements OnInit, OnChanges {
       map(([allPoke, filterValue]: [PokemonStatus[], string]) => {
         return allPoke.filter((poke) => {
           return (
-            poke.name.includes(filterValue) || String(poke.id) === filterValue
+            poke.name.includes(filterValue) ||
+            String(poke.id) === filterValue ||
+            poke.types.some((type: any) => type.type.name.includes(filterValue))
           );
         });
       })
