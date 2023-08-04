@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, concatMap, map, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, concatMap, distinctUntilChanged, forkJoin, from, map, mergeMap, of, switchMap, tap, toArray } from 'rxjs';
 import { PokeApiResponse } from '../types/pokeApiResponse';
 import { PokemonStatus } from '../types/pokemonStatus';
 import { PokemonEntry } from '../types/pokemonEntry';
@@ -9,10 +9,10 @@ import { PokemonEntry } from '../types/pokemonEntry';
   providedIn: 'root'
 })
 export class PokeApiService {
-  private urlAll: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=100";
+  private urlAll: string = "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=120";
   private urlSingle: string = "https://pokeapi.co/api/v2/pokemon/";
 
-  allPokemon$ = new BehaviorSubject<PokemonEntry[]>([]);
+  allPokemon$ = new BehaviorSubject<PokemonStatus[]>([]);
   searchFilter$ = new BehaviorSubject<string>("");
 
   setFilter(value: string): void{
@@ -24,15 +24,19 @@ export class PokeApiService {
   ) { }
 
   apiListAllPokemon(){
+    console.log("oi")
     this.http.get<PokeApiResponse>(this.urlAll).pipe(
-      tap(res => res.results.map(
-        (resPokemon) => {
-          return this.apiGetPokemonFromUrl(resPokemon.url).subscribe(resStatus => resPokemon.status = resStatus)
-        })
-      ),
+      distinctUntilChanged(),
+      map(res => res.results),
+      map(res => {
+        return from(res).pipe(
+          concatMap((v) => this.apiGetPokemonFromUrl(v.url)),
+        );
+      }),
+      concatMap((value) => value)
     ).subscribe( res => {
-      this.allPokemon$.next(res.results);
-      console.log(this.allPokemon$);
+      console.log(res);
+      this.allPokemon$.next([...this.allPokemon$.getValue(),res]);
     });
   }
 

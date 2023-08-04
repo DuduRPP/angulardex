@@ -2,8 +2,9 @@ import { Component, HostListener, Input, OnChanges, OnInit, SimpleChanges } from
 import { PokeApiService } from '../../services/poke-api.service';
 import { PokemonEntry } from '../../types/pokemonEntry';
 import { Type } from '../../types/type';
-import { Observable, combineLatest, filter, lastValueFrom, map, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, filter, lastValueFrom, map, switchMap } from 'rxjs';
 import { PokeApiResponse } from '../../types/pokeApiResponse';
+import { PokemonStatus } from '../../types/pokemonStatus';
 
 @Component({
   selector: 'app-list',
@@ -14,8 +15,8 @@ export class ListComponent implements OnInit, OnChanges {
   public breakpoint = 2;
   public showButton = false;
   public allPokemonList: PokemonEntry[];
-  public listedPokemon: PokemonEntry[];
-  public visiblePoke$: Observable<PokemonEntry[]>;
+  public listedPokemon: PokemonStatus[];
+  public visiblePoke$: Observable<PokemonStatus[]>;
 
   @Input('searched')
   public searched = "";
@@ -41,22 +42,23 @@ export class ListComponent implements OnInit, OnChanges {
   constructor(
     private pokeApiService: PokeApiService
   ){
-    this.visiblePoke$ = this.pokeApiService.allPokemon$
+    this.pokeApiService.apiListAllPokemon();
   }
 
   ngOnInit() {
     this.breakpoint = this.calculateBreakpoint(window.innerWidth);
-    this.pokeApiService.apiListAllPokemon();
-    //this.visiblePoke$ = this.pokeApiService.allPokemon$;
+
+
+    this.visiblePoke$ = this.pokeApiService.allPokemon$;
 
     this.visiblePoke$ = combineLatest([
        this.pokeApiService.allPokemon$,
        this.pokeApiService.searchFilter$
     ]).pipe(
-        map( ([allPoke,filterValue]: [PokemonEntry[], string]) =>{
+        map( ([allPoke,filterValue]: [PokemonStatus[], string]) =>{
           return allPoke.filter(poke => {
             return poke.name.includes(filterValue) ||
-            (poke.status.id ? String(poke.status.id) === filterValue : false )
+            String(poke.id) === filterValue
           });
         })
     )
