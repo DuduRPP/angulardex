@@ -1,14 +1,25 @@
-<app-search (emitSearch)="getSearch($event)" [searchedName]="searched"></app-search>
+<app-search
+  (emitSearch)="getSearch($event)"
+  [searchedName]="searched"
+></app-search>
 <section class="list">
-  <mat-grid-list [cols]="breakpoint" rowHeight="28rem" (window:resize)="onResize($event)">
+  <mat-grid-list
+    [cols]="breakpoint"
+    rowHeight="28rem"
+    (window:resize)="onResize($event)"
+  >
     <mat-grid-tile *ngFor="let poke of visiblePoke$ | async">
       <app-card [pokemon]="poke"></app-card>
     </mat-grid-tile>
   </mat-grid-list>
 </section>
 
-<button mat-mini-fab matTooltip="Primary" color="accent" [hidden]="!showButton" (click)="scrollToTop()">
+<button
+  mat-mini-fab
+  matTooltip="Primary"
+  color="accent"
+  [hidden]="!showButton"
+  (click)="scrollToTop()"
+>
   <mat-icon fontIcon="arrow_upward"></mat-icon>
 </button>
-
-
