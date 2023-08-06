@@ -1,11 +1,13 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2bf7c3c1-3754-4ca6-8fad-12d6c64d773f/deploy-status)](https://app.netlify.com/sites/angulardex-rpp/deploys)
+
 # Angular Dex
+
 <img title="Logo" alt="Logo image" src="src/assets/logo.png">
 <img title="Screens mockup" alt="Preview app screens with a monitor and smartphone screen mockup" src="src/assets/preview.png">
 
-
 ## Description
-"Pokédex" like web application made using Angular 16, Angular Material and making HTTP requests to the public API PokeAPI
 
+"Pokédex" like web application made using Angular 16, Angular Material and making HTTP requests to the public API PokeAPI
 
 ## Running this project locally
 
