@@ -18,7 +18,7 @@ import { PokemonStatus } from "../types/pokemonStatus";
 })
 export class PokeApiService {
   private urlAll: string =
-    "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1010";
+    "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=151";
   private urlSingle: string = "https://pokeapi.co/api/v2/pokemon/";
 
   allPokemon$ = new BehaviorSubject<PokemonStatus[]>([]);
