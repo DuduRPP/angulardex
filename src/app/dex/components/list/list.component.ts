@@ -70,9 +70,11 @@ export class ListComponent implements OnInit, OnChanges {
       map(([allPoke, filterValue]: [PokemonStatus[], string]) => {
         return allPoke.filter((poke) => {
           return (
-            poke.name.includes(filterValue) ||
+            poke.name.includes(filterValue.toLowerCase()) ||
             String(poke.id) === filterValue ||
-            poke.types.some((type: any) => type.type.name === filterValue)
+            poke.types.some(
+              (type: any) => type.type.name === filterValue.toLowerCase()
+            )
           );
         });
       })
