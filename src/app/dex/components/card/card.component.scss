@@ -1,27 +1,23 @@
 @use "../../../shared-styles/types.scss";
 
-mat-card{
+mat-card {
   width: 22rem;
   margin-top: 1.5rem;
 }
-mat-card-subtitle{
+mat-card-subtitle {
   font-size: 1.4rem;
   opacity: 0.85;
   margin-bottom: 0.2rem;
 }
 
-
-a{
-
+a {
   text-decoration: none;
   color: inherit;
 
-  img{
+  img {
     display: block;
     max-width: 100%;
     height: auto;
     margin: auto;
   }
 }
-
-

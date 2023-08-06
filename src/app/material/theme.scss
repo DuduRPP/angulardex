@@ -1,6 +1,8 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 
 @include mat.core();
+
+mat.$theme-ignore-duplication-warnings: true;
 
 $my-primary: mat.define-palette(mat.$indigo-palette);
 $my-accent: mat.define-palette(mat.$indigo-palette);
@@ -8,25 +10,29 @@ $my-warn: mat.define-palette(mat.$red-palette);
 
 $my-primary-dark: mat.define-palette(mat.$amber-palette);
 
-$my-theme: mat.define-light-theme((
- color: (
-   primary: $my-primary,
-   accent: $my-accent,
-   warn: $my-warn,
- ),
-));
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+  )
+);
 
-$my-theme-dark: mat.define-dark-theme((
- color: (
-   primary: $my-primary-dark,
-   accent: $my-accent,
-   warn: $my-primary,
- ),
-));
+$my-theme-dark: mat.define-dark-theme(
+  (
+    color: (
+      primary: $my-primary-dark,
+      accent: $my-accent,
+      warn: $my-primary,
+    ),
+  )
+);
 
-body.dark-theme{
-    @include mat.all-component-themes($my-theme-dark);
+body.dark-theme {
+  @include mat.all-component-themes($my-theme-dark);
 }
-body.light-theme{
-    @include mat.all-component-themes($my-theme);
+body.light-theme {
+  @include mat.all-component-themes($my-theme);
 }

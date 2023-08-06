@@ -72,7 +72,7 @@ export class ListComponent implements OnInit, OnChanges {
           return (
             poke.name.includes(filterValue) ||
             String(poke.id) === filterValue ||
-            poke.types.some((type: any) => type.type.name.includes(filterValue))
+            poke.types.some((type: any) => type.type.name === filterValue)
           );
         });
       })
